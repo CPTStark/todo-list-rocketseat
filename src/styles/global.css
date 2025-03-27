@@ -20,3 +20,13 @@
 body {
     font-family: 'Roboto', sans-serif;
 }
+
+.check-radix [data-state="checked"] {
+    border: 3px solid var(--color-purple-dark);
+    background-color: var(--color-purple-dark);
+    color: var(--color-base-gray-100);
+    transition: 0.2s;
+    transition-timing-function: ease-in-out;
+    transition-delay: 0.1s;
+    border-radius: 100%;
+}

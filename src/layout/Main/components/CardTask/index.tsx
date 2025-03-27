@@ -1,5 +1,7 @@
 import { Trash2 } from "lucide-react";
 import type { Task } from "../..";
+import * as Checkbox from "@radix-ui/react-checkbox";
+import { CheckIcon } from "@radix-ui/react-icons";
 
 interface CardTaskProps {
 	task: Task;
@@ -8,24 +10,23 @@ interface CardTaskProps {
 }
 
 export function CardTask({ task, key, deleteTask }: CardTaskProps) {
-	// function handleCheckboxChange(event: React.ChangeEvent<HTMLInputElement>) {
-	// 	console.log(event);
-	// }
-
 	return (
 		<div
 			key={key}
 			className="w-full border-[1px] bg-base-gray-500 border-base-gray-400 rounded-lg flex items-center justify-between p-5"
 		>
 			<div className="flex gap-5 items-start">
-				<button
-					// value={String(task.checked)}
-					// onChange={(ev) => handleCheckboxChange(ev)}
-					type="button"
-					className="p-2 rounded-full bg-base-gray-500 border-2 border-blue-light cursor-pointer"
-				>
-					{}
-				</button>
+				<div>
+					<Checkbox.Root
+						className="check-radix bg-transparent border-2 border-blue-light w-5 h-5 rounded-full flex items-center justify-center cursor-pointer"
+						defaultChecked={task.checked}
+						id="c1"
+					>
+						<Checkbox.Indicator className="CheckboxIndicator">
+							<CheckIcon className="" />
+						</Checkbox.Indicator>
+					</Checkbox.Root>
+				</div>
 				<span className="flex-wrap text-gray-100 text-[14px]">
 					{task.content}
 				</span>

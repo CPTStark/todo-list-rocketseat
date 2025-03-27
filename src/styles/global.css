@@ -1,0 +1,22 @@
+@import "tailwindcss";
+
+@theme {
+    --color-blue-dark: #1E6F9F;
+    --color-blue-light: #4EA8DE;
+    --color-purple-dark: #5E60CE;
+    --color-purple-light: #8284FA;
+
+    --color-base-gray-700: #0D0D0D;
+    --color-base-gray-600: #1A1A1A;
+    --color-base-gray-500: #262626;
+    --color-base-gray-400: #333333;
+    --color-base-gray-300: #808080;
+    --color-base-gray-200: #D9D9D9;
+    --color-base-gray-100: #F2F2F2;
+
+    --color-danger: #E25858;
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+}

@@ -12,8 +12,8 @@ interface CardTaskProps {
 
 export function CardTask({ task, key, deleteTask, setTasks }: CardTaskProps) {
 	function handleCheckTask() {
-		setTasks((state) =>
-			state.map((item) =>
+		setTasks((state: Task[]) =>
+			state.map((item: Task) =>
 				item.id === task.id ? { ...item, checked: !item.checked } : item,
 			),
 		);

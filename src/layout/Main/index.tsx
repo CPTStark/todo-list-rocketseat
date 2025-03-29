@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { FormTask } from "./components/FormTask";
 import { CardTask } from "./components/CardTask";
 import clipboard from "../../assets/clipboard.svg";
@@ -10,7 +10,17 @@ export interface Task {
 }
 
 export function Main() {
-	const [tasks, setTasks] = useState<Task[]>([]);
+	const [tasks, setTasks] = useState<Task[]>(() => {
+		const savedTasks = localStorage.getItem("@todolistrocketseat:tasks-1.0.0");
+		return savedTasks ? JSON.parse(savedTasks) : [];
+	});
+
+	useEffect(() => {
+		localStorage.setItem(
+			"@todolistrocketseat:tasks-1.0.0",
+			JSON.stringify(tasks),
+		);
+	}, [tasks]);
 
 	function deleteTask(taskId: number) {
 		const newTasks = tasks.filter((task) => task.id !== taskId);
@@ -36,7 +46,7 @@ export function Main() {
 						</div>
 						<div className="flex gap-1.5">
 							<p className="font-bold text-purple-light">Concluídas</p>
-							<div className="rounded-[100%] bg-base-gray-400 px-3">
+							<div className="rounded-4xl bg-base-gray-400 px-3">
 								<span>
 									{numberOfCompletedTasks >= 1
 										? `${numberOfCompletedTasks} de ${numberOfTasks}`
@@ -48,17 +58,24 @@ export function Main() {
 					<div className="h-px w-full bg-base-gray-400">{}</div>
 					<div className="space-y-3 overflow-y-auto">
 						{tasks.length > 0 ? (
-							tasks.map((task) => (
-								<CardTask deleteTask={deleteTask} key={task.id} task={task} />
-							))
+							[...tasks]
+								.sort((a, b) => Number(a.checked) - Number(b.checked))
+								.map((task) => (
+									<CardTask
+										deleteTask={deleteTask}
+										key={task.id}
+										task={task}
+										setTasks={setTasks}
+									/>
+								))
 						) : (
 							<div className="flex items-center flex-col mt-5 gap-5">
 								<img src={clipboard} alt="" />
 								<div className="flex flex-col">
-									<span className="font-bold text-base-gray-300 text-lg">
+									<span className="font-bold text-base-gray-300 text-lg text-center">
 										Você ainda não tem tarefas cadastradas
 									</span>
-									<span className="font-normal text-base-gray-300 text-lg">
+									<span className="font-normal text-base-gray-300 text-lg text-center">
 										Crie tarefas e organize seus itens a fazer
 									</span>
 								</div>

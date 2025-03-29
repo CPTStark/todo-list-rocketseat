@@ -7,17 +7,27 @@ interface CardTaskProps {
 	task: Task;
 	key: number;
 	deleteTask: (taskId: number) => void;
+	setTasks: (tasks: Task[]) => void;
 }
 
-export function CardTask({ task, key, deleteTask }: CardTaskProps) {
+export function CardTask({ task, key, deleteTask, setTasks }: CardTaskProps) {
+	function handleCheckTask() {
+		setTasks((state) =>
+			state.map((item) =>
+				item.id === task.id ? { ...item, checked: !item.checked } : item,
+			),
+		);
+	}
+
 	return (
 		<div
 			key={key}
-			className="w-full border-[1px] bg-base-gray-500 border-base-gray-400 rounded-lg flex items-center justify-between p-5"
+			className={`${task.checked ? "border-[1px] border-base-gray-500" : "border-[1px] border-base-gray-400"} w-full bg-base-gray-500 rounded-lg flex items-center justify-between p-5`}
 		>
 			<div className="flex gap-5 items-start">
 				<div>
 					<Checkbox.Root
+						onCheckedChange={handleCheckTask}
 						className="check-radix bg-transparent border-2 border-blue-light w-5 h-5 rounded-full flex items-center justify-center cursor-pointer"
 						defaultChecked={task.checked}
 						id="c1"
@@ -27,7 +37,9 @@ export function CardTask({ task, key, deleteTask }: CardTaskProps) {
 						</Checkbox.Indicator>
 					</Checkbox.Root>
 				</div>
-				<span className="flex-wrap text-gray-100 text-[14px]">
+				<span
+					className={`${task.checked ? "line-through opacity-60" : ""} flex-wrap text-gray-100 text-[14px]`}
+				>
 					{task.content}
 				</span>
 			</div>
@@ -40,7 +52,6 @@ export function CardTask({ task, key, deleteTask }: CardTaskProps) {
 					size={18}
 					className="text-base-gray-300 group-hover:text-danger"
 				/>
-				{task.checked}
 			</button>
 		</div>
 	);
